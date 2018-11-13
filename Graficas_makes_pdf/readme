@@ -1,0 +1,31 @@
+Plots_hw4.py debe (8
+puntos):
+Leer y guardar los datos generados por PDE.cpp y ODE.cpp
+ ODEs: gracar la trayectoria del proyectil para 45 grados y la trayectoria del proyectil
+para los distintos angulos. Guarde dichas gracas sin mostrarlas e incluyalas en el pdf de
+resultados.
+ PDEs: Para cada uno de los cassos hacer una graca 3D de las condiciones iniciales, dos
+gracas de estados intermedios del sistema y una graca de la conguracion de equilibrio.
+Haga tambien una graca de la temperatura promedio de la clacita en funcion del tiempo
+para los tres casos de condiciones de frontera.
+ Bono (5 pts) Hacer una animacion 3D de la temperatura del sistema en funcion del
+tiempo).
+El archivo Resultados_hw4.tex debe (5 puntos):
+ Organizar las gracas obtenidas (debe tener dos gracas del ejercicio del proyectil
+y todas las gracas del ejercicio de difusion termica.). Haga una seccion por cada
+ejercicio de la tarea y describa brevemente sus resultados. En el ejercicio de difusion
+incluya una peque~na descripcion del caso, las condiciones de frontera, explicacion de las
+diferencias observadas para distintas condiciones de frontera, etc... Este archivo debe
+estar incluido dentro de las dependencias del makele y debe permitir generar un archivo
+Resultados_hw4.pdf
+El archivo hw4.mk debe (15 puntos):
+ Incluir todas las dependencias y reglas necesarias para generar y actualizar el archivo:
+Resultados_hw4.pdf.
+Los archivos que deben subir a Sicua (comprimidos en ApellidoNombre_hw4.zip) son:
+hw4.mk,
+ODE.cpp.
+PDE.cpp,
+Plots_hw4.py
+y
+Resultados_hw4.tex.
+Page
