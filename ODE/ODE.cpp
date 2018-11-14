@@ -20,22 +20,52 @@ float static ht = 0.001; // variacion del tiempo entre cada instante
 float static tmax = 2.0; //el tiempo maximo con el que se trabajara
 int N = (int) tmax/ht; // el numero de iteraciones que se realizaran en el sisema
 vector<float> f[2];
-
 /* Se define la funcion con la cual se construira la ecuacion a esta funcion 
 le entran por parameto las 2 componentes de un vector v*/
-void calcularFuncion(vector<float> v0,vector<float> v1){
+void funcion_inc(vector<float> v0,vector<float> v1){
 	float magv1 = sqrt(pow(v1.at(0),2)+pow(v1.at(1),2));
 	vector<float> tempv1;
 	float tempv1_x = -g.at(0)-(c/m)*(magv1)*v1.at(0);
 	float tempv1_y = -g.at(1)-(c/m)*(magv1)*v1.at(1);
 	tempv1.push_back(tempv1_x);
 	tempv1.push_back(tempv1_y);
-	f[0]=v1;
-	f[1]=tempv1;
+	fun[0]=v1;
+	fun[1]=tempv1;
 }
-
 /*Se define la funcion con la cual se resolvera la ecuacion para encontrar el movimiento
-del proyectil utilizando el metodo de Rugen Kuta 4*/
+del proyectil utilizando el metodo de  Runge Kutta 4*/
+void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
+	// Se define un vector para asignar un valor inicial del movimiento 
+	vector<float> M[N][2];
+	M[0][0]=x0;
+	M[0][1]=v0;
+/*Ahora se debe implementar el metodo de Runge Kutta para resulver la eqn*/
+	for (int i = 1; i < N; ++i){
+		// Inicialmente se debe calcular el valor de K1 para la solucion 
+		vector<float> k1[2];
+		funcion_inc(M[i-1][0],M[i-1][1]);
+		// Calculado K1 se procede con el calculo de K2
+		vector<float> k2[2];
+		vector<float> valorM0_2;
+		vector<float> valorM1_2;
+		float valorM0_2_x = (M[i-1][0]).at(0)+(ht/2.0);
+		float valorM0_2_y = (M[i-1][0]).at(1)+(ht/2.0);
+		float valorM1_2_x = (M[i-1][1]).at(0)+((k1[1]).at(0))*(ht/2.0);
+		float valorM1_2_y = (M[i-1][1]).at(1)+((k1[1]).at(1))*(ht/2.0);
+		valorM0_2.push_back(valorM0_2_x);
+		valorM0_2.push_back(valorM0_2_y);
+		valorM1_2.push_back(valorM1_2_x);
+		valorM1_2.push_back(valorM1_2_y);
+
+		funcion_inc(valorM0_2,valorM1_2);
+		k2[0] = fun[0];
+		k2[1] = fun[1];
+
+
+	}
+
+	}
+
 
 
 
