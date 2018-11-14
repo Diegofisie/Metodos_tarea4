@@ -21,6 +21,25 @@ float static tmax = 2.0; //el tiempo maximo con el que se trabajara
 int N = (int) tmax/ht; // el numero de iteraciones que se realizaran en el sisema
 vector<float> f[2];
 
+/* Se define la funcion con la cual se construira la ecuacion a esta funcion 
+le entran por parameto las 2 componentes de un vector v*/
+void calcularFuncion(vector<float> v0,vector<float> v1){
+	float magv1 = sqrt(pow(v1.at(0),2)+pow(v1.at(1),2));
+	vector<float> tempv1;
+	float tempv1_x = -g.at(0)-(c/m)*(magv1)*v1.at(0);
+	float tempv1_y = -g.at(1)-(c/m)*(magv1)*v1.at(1);
+	tempv1.push_back(tempv1_x);
+	tempv1.push_back(tempv1_y);
+	f[0]=v1;
+	f[1]=tempv1;
+}
+
+/*Se define la funcion con la cual se resolvera la ecuacion para encontrar el movimiento
+del proyectil utilizando el metodo de Rugen Kuta 4*/
+
+
+
+
 
 
 
@@ -29,6 +48,7 @@ vector<float> f[2];
 
 
 int main() {
+
     
   return 0;
 }
