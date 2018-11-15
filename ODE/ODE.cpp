@@ -37,7 +37,7 @@ void funcion_inc(vector<float> v0,vector<float> v1){
 }
 /*Se define la funcion con la cual se resolvera la ecuacion para encontrar el movimiento
 del proyectil utilizando el metodo de  Runge Kutta 4*/
-void funcion_movimiento(float angulo,string file_exp){
+float  funcion_movimiento(float angulo,string file_exp){
 	// asignando condiciones inicciales para la velocidad
 	vel_0.clear();
 	vel_0.push_back(300*cos(angulo*PI/180.0));
@@ -153,7 +153,7 @@ int main() {
 	for (int i = 1; i <= 7; ++i)
 	{	
 		angulo=10*i;
-		distanciasAngulos[i-1]=funcion_movimiento(angulo,"datos_parte2.dat");
+		angulos_parte2[i-1]=funcion_movimiento(angulo,"datos_parte2.dat");
 	}
 	float movimiento__maximo = 0;
 	int jamesito_el_numero = 10;
