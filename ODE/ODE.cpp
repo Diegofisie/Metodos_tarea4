@@ -8,6 +8,7 @@ resolver la ecuacon de movimiento:*/
 #include <vector>
 #include <math.h> 
 #include<cmath>
+#include <fstream>
 #include <vector>
 using namespace std;
 ///// Se declaran las constantes necesarias para desarrollar la ecuacion//////
@@ -20,6 +21,8 @@ float static ht = 0.001; // variacion del tiempo entre cada instante
 float static tmax = 2.0; //el tiempo maximo con el que se trabajara
 int N = (int) tmax/ht; // el numero de iteraciones que se realizaran en el sisema
 vector<float> fun[2];
+vector<float> posx_0;
+vector<float> vel_0;
 /* Se define la funcion con la cual se construira la ecuacion a esta funcion 
 le entran por parameto las 2 componentes de un vector v*/
 void funcion_inc(vector<float> v0,vector<float> v1){
@@ -34,7 +37,16 @@ void funcion_inc(vector<float> v0,vector<float> v1){
 }
 /*Se define la funcion con la cual se resolvera la ecuacion para encontrar el movimiento
 del proyectil utilizando el metodo de  Runge Kutta 4*/
-void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
+void funcion_movimiento(float angulo,string file_exp){
+	// asignando condiciones inicciales para la velocidad
+	vel_0.clear();
+	vel_0.push_back(300*cos(angulo*PI/180.0));
+	vel_0.push_back(300*sin(angulo*PI/180.0));
+
+	ofstream file;
+	file.open(file_exp.c_str());
+	file<<"Angulo:"<<angulo<<endl;
+	float x_total = 0;
 	// Se define un vector para asignar un valor inicial del movimiento 
 	vector<float> M[N][2];
 	M[0][0]=posx_0;
@@ -113,25 +125,38 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 	 	M1.push_back((M[i-1][1]).at(0)+ht* pendiente_1.at(0));
 	 	M1.push_back((M[i-1][1]).at(1)+ht* pendiente_1.at(1));
 	 	// Se generan los nuevos valores de movimiento en el vector M
+
+		if ((M[i-1][0]).at(1) < 0)// Este if evita que se produzca un error en c++
+	 	{
+	 		break;
+	 	}
 	 	M[i][0]=M0;
 		M[i][1]=M1;
+		x_total += sqrt(pow(M[i][0].at(0)-M[i-1][0].at(0),2)+pow(M[i][0].at(1)-M[i-1][0].at(1),2));
+
+
+
+
+
 
 		// Se dan los resultados de los valores de la posicion en la terminal 
-		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl;
+		file<<"t="<<i*ht<<",posx="<<(M[i-1][0]).at(0)<<" , posy="<<(M[i-1][0]).at(1)<<" , velx="<<(M[i-1][1]).at(0)<<" , vely="<<(M[i-1][1]).at(1)<<"\n";
 	}
+	file.close();
+	return x_total;
 }
 int main() {
 	g.push_back(0.0);
 	g.push_back(10.0);	
 
-	vector<float> posx_0;
 	posx_0.push_back(0.0);
 	posx_0.push_back(0.0);
 
-	vector<float> vel_0;
-	vel_0.push_back(300*cos(45*PI/180.0));
-	vel_0.push_back(300*sin(45*PI/180.0));
+	//Para la primera parte
+	float angulo = 45.0;
+	float distancia_45_grados = funcion_movimiento(angulo, "datos_45.dat");
+	cout<<" La distancia que recorre el proyectil a 45 grados es "<<distancia_45_grados<<"m"<<endl;
 
-	funcion_movimiento(posx_0,vel_0);
+	
 	return 0;
 }
