@@ -93,12 +93,6 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 		k4[0] = fun[0];
 		k4[1] = fun[1];
 
-		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl;
-
-
-
-		
-
 	}
 
 	}
