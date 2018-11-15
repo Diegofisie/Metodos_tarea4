@@ -37,8 +37,8 @@ del proyectil utilizando el metodo de  Runge Kutta 4*/
 void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 	// Se define un vector para asignar un valor inicial del movimiento 
 	vector<float> M[N][2];
-	M[0][0]=x0;
-	M[0][1]=v0;
+	M[0][0]=posx_0;
+	M[0][1]=vel_0;
 /*Ahora se debe implementar el metodo de Runge Kutta para resulver la eqn*/
 	for (int i = 1; i < N; ++i){
 		// Inicialmente se debe calcular el valor de K1 para la solucion 
@@ -120,20 +120,18 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
 int main() {
+	g.push_back(0.0);
+	g.push_back(10.0);	
 
-    
-  return 0;
+	vector<float> posx_0;
+	posx_0.push_back(0.0);
+	posx_0.push_back(0.0);
+
+	vector<float> vel_0;
+	vel_0.push_back(300*cos(45*PI/180.0));
+	vel_0.push_back(300*sin(45*PI/180.0));
+
+	funcion_movimiento(posx_0,vel_0);
+	return 0;
 }
