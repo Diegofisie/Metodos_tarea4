@@ -19,18 +19,18 @@ float static ht = 0.001; // variacion del tiempo entre cada instante
 ///// Se declaras las variables de la ecuacion que varian segun los puntos /////
 float static tmax = 2.0; //el tiempo maximo con el que se trabajara
 int N = (int) tmax/ht; // el numero de iteraciones que se realizaran en el sisema
-vector<float> f[2];
+vector<float> fun[2];
 /* Se define la funcion con la cual se construira la ecuacion a esta funcion 
 le entran por parameto las 2 componentes de un vector v*/
 void funcion_inc(vector<float> v0,vector<float> v1){
 	float magv1 = sqrt(pow(v1.at(0),2)+pow(v1.at(1),2));
-	vector<float> tempv1;
-	float tempv1_x = -g.at(0)-(c/m)*(magv1)*v1.at(0);
-	float tempv1_y = -g.at(1)-(c/m)*(magv1)*v1.at(1);
-	tempv1.push_back(tempv1_x);
-	tempv1.push_back(tempv1_y);
+	vector<float> mov1;
+	float mov1_x = -g.at(0)-(c/m)*(magv1)*v1.at(0);
+	float mov1_y = -g.at(1)-(c/m)*(magv1)*v1.at(1);
+	mov1.push_back(mov1_x);
+	mov1.push_back(mov1_y);
 	fun[0]=v1;
-	fun[1]=tempv1;
+	fun[1]=mov1;
 }
 /*Se define la funcion con la cual se resolvera la ecuacion para encontrar el movimiento
 del proyectil utilizando el metodo de  Runge Kutta 4*/
@@ -98,16 +98,16 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 		float pendiente0_x = (1.0/6.0)*((k1[0]).at(0)+2.0*(k2[0]).at(0)+2.0*(k3[0]).at(0)+(k4[0]).at(0));
 		float pendiente0_y = (1.0/6.0)*((k1[0]).at(1)+2.0*(k2[0]).at(1)+2.0*(k3[0]).at(1)+(k4[0]).at(1));
 		float pendiente1_x = (1.0/6.0)*((k1[1]).at(0)+2.0*(k2[1]).at(0)+2.0*(k3[1]).at(0)+(k4[1]).at(0));
-		float pendiente1_y = (1.0/6.0)*((k1[1]).at(1)+2.0*(k2[1]).at(1)+2.0*(k3[1]).at(1)+(k4[1]).at(1));77
+		float pendiente1_y = (1.0/6.0)*((k1[1]).at(1)+2.0*(k2[1]).at(1)+2.0*(k3[1]).at(1)+(k4[1]).at(1));
 		// Se generan los vectores con los valores de las pendientes generadas por los vales de RK
 		vector<float> pendiente_0;
 		vector<float> pendiente_1;
 		vector<float> M0;
 		vector<float> M1;
-	 	slope0.push_back(pendiente0_x);
-	 	slope0.push_back(pendiente0_y);
-	 	slope1.push_back(pendiente1_x);
-	 	slope1.push_back(pendiente1_y);
+	 	pendiente_0.push_back(pendiente0_x);
+	 	pendiente_0.push_back(pendiente0_y);
+	 	pendiente_1.push_back(pendiente1_x);
+	 	pendiente_1.push_back(pendiente1_y);
 	 	M0.push_back((M[i-1][0]).at(0)+ht*pendiente_0.at(0));
 	 	M0.push_back((M[i-1][0]).at(1)+ht*pendiente_0.at(1));
 	 	M1.push_back((M[i-1][1]).at(0)+ht* pendiente_1.at(0));
@@ -117,7 +117,7 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 		M[i][1]=M1;
 
 		// Se dan los resultados de los valores de la posicion en la terminal 
-		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl
+		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl;
 	}
 }
 int main() {
