@@ -133,12 +133,6 @@ void funcion_movimiento(float angulo,string file_exp){
 	 	M[i][0]=M0;
 		M[i][1]=M1;
 		x_total += sqrt(pow(M[i][0].at(0)-M[i-1][0].at(0),2)+pow(M[i][0].at(1)-M[i-1][0].at(1),2));
-
-
-
-
-
-
 		// Se dan los resultados de los valores de la posicion en la terminal 
 		file<<"t="<<i*ht<<",posx="<<(M[i-1][0]).at(0)<<" , posy="<<(M[i-1][0]).at(1)<<" , velx="<<(M[i-1][1]).at(0)<<" , vely="<<(M[i-1][1]).at(1)<<"\n";
 	}
@@ -148,15 +142,29 @@ void funcion_movimiento(float angulo,string file_exp){
 int main() {
 	g.push_back(0.0);
 	g.push_back(10.0);	
-
 	posx_0.push_back(0.0);
 	posx_0.push_back(0.0);
-
 	//Para la primera parte
 	float angulo = 45.0;
 	float distancia_45_grados = funcion_movimiento(angulo, "datos_45.dat");
 	cout<<" La distancia que recorre el proyectil a 45 grados es "<<distancia_45_grados<<"m"<<endl;
-
-	
+	//Para la segunda parte
+	float angulos_parte2[7];
+	for (int i = 1; i <= 7; ++i)
+	{	
+		angulo=10*i;
+		distanciasAngulos[i-1]=funcion_movimiento(angulo,"datos_parte2.dat");
+	}
+	float movimiento__maximo = 0;
+	int jamesito_el_numero = 10;
+	for (int i = 0; i < 7; ++i)
+	{
+		if (angulos_parte2[i]>movimiento__maximo)
+		{
+			movimiento__maximo = angulos_parte2[i];
+			jamesito_el_numero = (i+1)*10;
+		}
+	}
+	cout<<" La distancia maxima que recorre el proyectil es: "<<movimiento__maximo<<"m"<<" esta distancia se tiene cuando el angulo es:"<<jamesito_el_numero<<" grados."<<endl;
 	return 0;
 }
