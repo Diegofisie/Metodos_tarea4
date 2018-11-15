@@ -92,10 +92,34 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 		funcion_inc(valorM0_4,valorM1_4);
 		k4[0] = fun[0];
 		k4[1] = fun[1];
+		/*Con lo vectores obtenidos en la solucion de la ecuacion con el metodo de RK de debe 
+		generar la pendiente con la cual se generaran los valores de x que son soluciones 
+		de la ecuacion diferencial*/
+		float pendiente0_x = (1.0/6.0)*((k1[0]).at(0)+2.0*(k2[0]).at(0)+2.0*(k3[0]).at(0)+(k4[0]).at(0));
+		float pendiente0_y = (1.0/6.0)*((k1[0]).at(1)+2.0*(k2[0]).at(1)+2.0*(k3[0]).at(1)+(k4[0]).at(1));
+		float pendiente1_x = (1.0/6.0)*((k1[1]).at(0)+2.0*(k2[1]).at(0)+2.0*(k3[1]).at(0)+(k4[1]).at(0));
+		float pendiente1_y = (1.0/6.0)*((k1[1]).at(1)+2.0*(k2[1]).at(1)+2.0*(k3[1]).at(1)+(k4[1]).at(1));77
+		// Se generan los vectores con los valores de las pendientes generadas por los vales de RK
+		vector<float> pendiente_0;
+		vector<float> pendiente_1;
+		vector<float> M0;
+		vector<float> M1;
+	 	slope0.push_back(pendiente0_x);
+	 	slope0.push_back(pendiente0_y);
+	 	slope1.push_back(pendiente1_x);
+	 	slope1.push_back(pendiente1_y);
+	 	M0.push_back((M[i-1][0]).at(0)+ht*pendiente_0.at(0));
+	 	M0.push_back((M[i-1][0]).at(1)+ht*pendiente_0.at(1));
+	 	M1.push_back((M[i-1][1]).at(0)+ht* pendiente_1.at(0));
+	 	M1.push_back((M[i-1][1]).at(1)+ht* pendiente_1.at(1));
+	 	// Se generan los nuevos valores de movimiento en el vector M
+	 	M[i][0]=M0;
+		M[i][1]=M1;
 
+		// Se dan los resultados de los valores de la posicion en la terminal 
+		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl
 	}
-
-	}
+}
 
 
 
