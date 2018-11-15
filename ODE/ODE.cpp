@@ -60,7 +60,44 @@ void funcion_movimiento(vector<float> posx_0,vector<float> vel_0){
 		funcion_inc(valorM0_2,valorM1_2);
 		k2[0] = fun[0];
 		k2[1] = fun[1];
+		//Se calcula el valor de k3
+		vector<float> k3[2];
+		vector<float> valorM0_3;
+		vector<float> valorM1_3;
+		float valorM0_3_x = (M[i-1][0]).at(0)+(ht/2.0);
+		float valorM0_3_y = (M[i-1][0]).at(1)+(ht/2.0);
+		float valorM1_3_x = (M[i-1][1]).at(0)+((k2[1]).at(0))*(ht/2.0);
+		float valorM1_3_y = (M[i-1][1]).at(1)+((k2[1]).at(1))*(ht/2.0);
+		valorM0_3.push_back(valorM0_3_x);
+		valorM0_3.push_back(valorM0_3_x);
+		valorM1_3.push_back(valorM1_3_x);
+		valorM1_3.push_back(valorM1_3_y);
 
+		funcion_inc(valorM0_2,valorM1_3);
+		k3[0] = fun[0];
+		k3[1] = fun[1];
+		//Se calcula el valor de k4
+		vector<float> k4[2];
+		vector<float> valorM0_4;
+		vector<float> valorM1_4;
+		float valorM0_4_x = (M[i-1][0]).at(0)+(ht);
+		float valorM0_4_y = (M[i-1][0]).at(1)+(ht);
+		float valorM1_4_x = (M[i-1][1]).at(0)+((k3[1]).at(0))*(ht);
+		float valorM1_4_y = (M[i-1][1]).at(1)+((k3[1]).at(1))*(ht);
+		valorM0_4.push_back(valorM0_4_x);
+		valorM0_4.push_back(valorM0_4_y);
+		valorM1_4.push_back(valorM1_4_x);
+		valorM1_4.push_back(valorM1_4_y);
+
+		funcion_inc(valorM0_4,valorM1_4);
+		k4[0] = fun[0];
+		k4[1] = fun[1];
+
+		cout<<(M[i-1][0]).at(0)<<","<<(M[i-1][0]).at(1)<<","<<(M[i-1][1]).at(0)<<","<<(M[i-1][1]).at(1)<<endl;
+
+
+
+		
 
 	}
 
