@@ -56,6 +56,9 @@ float  funcion_movimiento(float angulo,string file_exp){
 		// Inicialmente se debe calcular el valor de K1 para la solucion 
 		vector<float> k1[2];
 		funcion_inc(M[i-1][0],M[i-1][1]);
+		k1[0] = fun[0];
+		k1[1] = fun[1];
+
 		// Calculado K1 se procede con el calculo de K2
 		vector<float> k2[2];
 		vector<float> valorM0_2;
