@@ -45,7 +45,7 @@ float  funcion_movimiento(float angulo,string file_exp){
 	vel_0.push_back(300*cos(angulo*PI/180.0));
 	vel_0.push_back(300*sin(angulo*PI/180.0));
 
-	float x_total = 0;
+	
 	// Se define un vector para asignar un valor inicial del movimiento 
 	vector<float> M[N][2];
 	M[0][0]=posx_0;
@@ -60,8 +60,7 @@ tengo que declarar lo que sigue si no no sale bien en esta basura*/
 		file.open(file_exp.c_str());
 	}
 	file<<"Angulo:"<<angulo<<endl;
-//float x_total = 0;
-
+float x_total = 0;
 
 
 
@@ -155,6 +154,7 @@ tengo que declarar lo que sigue si no no sale bien en esta basura*/
 		// Se dan los resultados de los valores de la posicion en la terminal 
 		file<<"t="<<i*ht<<",posx="<<(M[i-1][0]).at(0)<<" , posy="<<(M[i-1][0]).at(1)<<" , velx="<<(M[i-1][1]).at(0)<<" , vely="<<(M[i-1][1]).at(1)<<"\n";
 
+
 	}
 	file.close();
 	return x_total;
@@ -181,6 +181,7 @@ int main() {
 	ofstream file;
 	file.open("datos2_ODE.dat", ios::out | ios::app);
 	file<<data_count.at(1)<<","<<data_count.at(2)<<","<<data_count.at(3)<<","<<data_count.at(4)<<","<<data_count.at(5)<<","<<data_count.at(6)<<","<<data_count.at(7)<<endl;
+
 	file.close();
 
 	float movimiento__maximo = 0;
