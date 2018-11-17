@@ -28,6 +28,8 @@ int Num = (int) L/dx; // el numero de pasos que se tomaran para analizar los dat
 int Num_varilla = (int) d/dx; // lo mismo que para el anterior pero con el diametro de la varilla 
 int Temp_10gc = 1000;
 int Temp_open = 1000;
+int Temp_peri = 1000;
+
 
 
 /*Se procede con la contruccion de las funciones para resolver la ecuacion, incialmente la primera 
@@ -168,6 +170,73 @@ void eqn_dif_open(string nombre_txt){
 	}
 	file.close();
 }
+/*Generados los datos con la funcion para las ecuaciones de frontera de 10 grados centigrados y con condiciones
+abiertas se procede con la tercera la cual es realizar la solucion de la ecuacion con condiciones de frontera
+periodicas*/
+void eqn_dif_peri(string nombre_txt){
+	//Creacion archivo de datos
+	ofstream file;
+	file.open(nombre_txt.c_str());
+
+	float datos_anteriores[Num][Num];
+	float datos_actuales[Num][Num];
+
+	for (int i = 0; i < Num; ++i)
+	{
+		for (int j = 0; j < Num; ++j)
+		{
+			float eqn_calculo = pow((i*dx)-(L/2),2)+pow((j*dx)-(L/2),2);
+			if (eqn_calculo <= pow(d/2,2))
+			{
+				datos_anteriores[i][j]=100;
+			}
+			else{
+				datos_actuales[i][j]=10;
+			}
+		}
+	}
+	file << "T,"<<Temp_peri<<",N,"<<Num<<"\n";
+	for (int k = 0; k < Temp_peri; ++k)
+	{
+		file << "Tiempo:"<<k*dt<<"\n";
+		for (int i = 0; i < Num; ++i)
+		{
+			for (int j = 0; j < Num; ++j)
+			{	
+				if ((i > 0  && i < (Num-1)) && (j > 0 && j < (Num-1)))
+				{
+					float eqn_calculo = pow((i*dx)-(L/2),2)+pow((j*dx)-(L/2),2);
+					if (eqn_calculo > pow(d/2,2))
+					{
+						datos_actuales[i][j]=alpha*(datos_anteriores[i+1][j]+datos_anteriores[i-1][j]+datos_anteriores[i][j+1]+datos_anteriores[i][j-1])+((1-4*alpha)*datos_anteriores[i][j]);
+					}
+					else{
+						datos_actuales[i][j] = 100;
+					}
+				}
+				else{
+					for (int i = 0; i < Num; ++i)
+					{
+						datos_actuales[0][i]=datos_actuales[Num-1][i];
+						datos_actuales[i][0]=datos_actuales[i][Num-1];
+					}
+				}
+				file << datos_anteriores[i][j]<< ",";
+			}
+			file << "\n";
+		}
+		for (int i = 0; i < Num; ++i)
+		{
+			for (int j = 0; j < Num; ++j)
+			{
+				datos_anteriores[i][j]=datos_actuales[i][j];
+			}
+		}
+	}
+	file.close();
+}
+
+
 
 
 
@@ -178,5 +247,6 @@ void eqn_dif_open(string nombre_txt){
 int main(){
 	eqn_dif_10gc("parte1_PDE.dat");
 	eqn_dif_open("parte2_PDE.dat");
+	eqn_dif_peri("parte3_PDE.dat");
 	return 0;
 }
