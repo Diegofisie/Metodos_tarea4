@@ -138,6 +138,7 @@ float  funcion_movimiento(float angulo,string file_exp){
 		x_total += sqrt(pow(M[i][0].at(0)-M[i-1][0].at(0),2)+pow(M[i][0].at(1)-M[i-1][0].at(1),2));
 		// Se dan los resultados de los valores de la posicion en la terminal 
 		file<<"t="<<i*ht<<",posx="<<(M[i-1][0]).at(0)<<" , posy="<<(M[i-1][0]).at(1)<<" , velx="<<(M[i-1][1]).at(0)<<" , vely="<<(M[i-1][1]).at(1)<<"\n";
+
 	}
 	file.close();
 	return x_total;
@@ -151,6 +152,8 @@ int main() {
 	float angulo = 45.0;
 	float distancia_45_grados = funcion_movimiento(angulo, "datos_45.dat");
 	cout<<" La distancia que recorre el proyectil a 45 grados es "<<distancia_45_grados<<"m"<<endl;
+
+
 	//Para la segunda parte
 	float angulos_parte2[7];
 	for (int i = 1; i <= 7; ++i)
@@ -158,6 +161,15 @@ int main() {
 		angulo=10*i;
 		angulos_parte2[i-1]=funcion_movimiento(angulo,"datos_parte2.dat");
 	}
+
+	ofstream datos;
+	file.open("datos_parte2.dat", ios::out | ios::app);
+	file<<data_count.at(1)<<","<<data_count.at(2)<<","<<data_count.at(3)<<","<<data_count.at(4)<<","<<data_count.at(5)<<","<<data_count.at(6)<<","<<data_count.at(7)<<endl;
+	file.close();
+
+
+
+
 	float movimiento__maximo = 0;
 	int jamesito_el_numero = 10;
 	for (int i = 0; i < 7; ++i)
