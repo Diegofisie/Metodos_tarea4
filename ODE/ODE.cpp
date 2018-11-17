@@ -10,6 +10,7 @@ resolver la ecuacon de movimiento:*/
 #include<cmath>
 #include <fstream>
 #include <vector>
+
 using namespace std;
 ///// Se declaran las constantes necesarias para desarrollar la ecuacion//////
 float static PI = 3.14159265359; // el valor de pi como una constante global 
@@ -18,11 +19,12 @@ float static c = 0.2; // el coeficiente de friccion
 float static m  = 0.2; // la masa del objeto en kilo gramos
 float static ht = 0.001; // variacion del tiempo entre cada instante
 ///// Se declaras las variables de la ecuacion que varian segun los puntos /////
-float static tmax = 2.0; //el tiempo maximo con el que se trabajara
+float static tmax = 3.0; //el tiempo maximo con el que se trabajara
 int N = (int) tmax/ht; // el numero de iteraciones que se realizaran en el sisema
 vector<float> fun[2];
 vector<float> posx_0;
 vector<float> vel_0;
+vector<int> data_count;
 /* Se define la funcion con la cual se construira la ecuacion a esta funcion 
 le entran por parameto las 2 componentes de un vector v*/
 void funcion_inc(vector<float> v0,vector<float> v1){
@@ -43,14 +45,26 @@ float  funcion_movimiento(float angulo,string file_exp){
 	vel_0.push_back(300*cos(angulo*PI/180.0));
 	vel_0.push_back(300*sin(angulo*PI/180.0));
 
-	ofstream file;
-	file.open(file_exp.c_str());
-	file<<"Angulo:"<<angulo<<endl;
 	float x_total = 0;
 	// Se define un vector para asignar un valor inicial del movimiento 
 	vector<float> M[N][2];
 	M[0][0]=posx_0;
 	M[0][1]=vel_0;
+/*Para que esta basura de lenguaje no bote error para crear los archivos de la parte 2 
+tengo que declarar lo que sigue si no no sale bien en esta basura*/
+	ofstream file;
+	if(file_exp == "datos2_ODE.dat"){
+		file.open(file_exp.c_str(), ios::out | ios::app);
+	}
+	else{
+		file.open(file_exp.c_str());
+	}
+	file<<"Angulo:"<<angulo<<endl;
+//float x_total = 0;
+
+
+
+
 /*Ahora se debe implementar el metodo de Runge Kutta para resulver la eqn*/
 	for (int i = 1; i < N; ++i){
 		// Inicialmente se debe calcular el valor de K1 para la solucion 
@@ -129,10 +143,12 @@ float  funcion_movimiento(float angulo,string file_exp){
 	 	M1.push_back((M[i-1][1]).at(1)+ht* pendiente_1.at(1));
 	 	// Se generan los nuevos valores de movimiento en el vector M
 
-		if ((M[i-1][0]).at(1) < 0)// Este if evita que se produzca un error en c++
+	 	if ((M[i-1][0]).at(1) < 0)
 	 	{
+	 		data_count.push_back(i);
 	 		break;
 	 	}
+
 	 	M[i][0]=M0;
 		M[i][1]=M1;
 		x_total += sqrt(pow(M[i][0].at(0)-M[i-1][0].at(0),2)+pow(M[i][0].at(1)-M[i-1][0].at(1),2));
@@ -150,7 +166,7 @@ int main() {
 	posx_0.push_back(0.0);
 	//Para la primera parte
 	float angulo = 45.0;
-	float distancia_45_grados = funcion_movimiento(angulo, "datos_45.dat");
+	float distancia_45_grados = funcion_movimiento(angulo, "datos1_ODE.dat");
 	cout<<" La distancia que recorre el proyectil a 45 grados es "<<distancia_45_grados<<"m"<<endl;
 
 
@@ -159,16 +175,13 @@ int main() {
 	for (int i = 1; i <= 7; ++i)
 	{	
 		angulo=10*i;
-		angulos_parte2[i-1]=funcion_movimiento(angulo,"datos_parte2.dat");
+		angulos_parte2[i-1]=funcion_movimiento(angulo,"datos2_ODE.dat");
 	}
 
-	ofstream datos;
-	file.open("datos_parte2.dat", ios::out | ios::app);
+	ofstream file;
+	file.open("datos2_ODE.dat", ios::out | ios::app);
 	file<<data_count.at(1)<<","<<data_count.at(2)<<","<<data_count.at(3)<<","<<data_count.at(4)<<","<<data_count.at(5)<<","<<data_count.at(6)<<","<<data_count.at(7)<<endl;
 	file.close();
-
-
-
 
 	float movimiento__maximo = 0;
 	int jamesito_el_numero = 10;
