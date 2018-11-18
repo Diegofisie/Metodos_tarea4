@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[56]:
+# In[75]:
 
 
 # Importo lo que necesito para grafiar
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
-# In[57]:
+# In[76]:
 
 
 # Para graficar los datos del punto 2, la ecuacion diferencial ordinaria
@@ -31,7 +31,7 @@ for i in range(1,len(data)):
     velocidad_y[i] = float((data[i]).decode("UTF8").split(",")[4].split("=")[1])
 
 
-# In[58]:
+# In[77]:
 
 
 #Ahora se genera la grafica con los valores anteriores
@@ -45,7 +45,7 @@ plt.legend()
 plt.savefig("ODE_45grados.pdf",bbox_inches="tight")
 
 
-# In[59]:
+# In[78]:
 
 
 #Ahora se vuelven a cargar los datos de ODE pero para la variacion de los angulos 
@@ -69,7 +69,7 @@ for i in range(7):
         data_countf += int(data_count[i+1]);
 
 
-# In[60]:
+# In[79]:
 
 
 #Se grafican las distancias con la vaariacionn de los angulos entre 10 y 70
@@ -84,10 +84,139 @@ plt.legend()
 plt.savefig("ODE_varicion_grados.pdf",bbox_inches="tight")
 
 
-# In[61]:
+# In[97]:
 
 
 # Para graficar los datos del punto 3, la ecuacion diferencial parcial
 #inicialmente se importan los datos generados por el programa de c++
 #los datos son muy pesados asi que todo es muuuuy lento.
+data = np.genfromtxt("parte1_PDE.dat",None,skip_header=1)
+tags = (np.genfromtxt("parte1_PDE.dat",skip_footer=(len(data)-1),dtype=None))[0].decode("UTF8").split(",")
+#datos de variacion de temperatura en el tiempo
+var_temp_tiempo = [] 
+#tiempo del proceso
+tiempo = int(tags[1])
+#numero de "iteraciones" que se harian
+N = int(tags[3])
+N_0 = 1;
+N_f = N+1
+
+for i in range(tiempo):
+    var_temp = np.zeros([N,N]) 
+    for j in range(N_0,N_f):
+        tag_data = data[j].decode("UTF8").split(",")
+        for k in range(N):
+            var_temp[j-N_0][k]=float(tag_data[k])
+    N_0 += N+1
+    N_f += N+1
+    var_temp_tiempo.append(var_temp)
+    
+x = np.arange(0,N,1)
+y = np.arange(0,N,1)
+x,y = np.meshgrid(x, y)
+#Temperatura en condiciones iniciales, es decir en el tiempo inicial
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo[0], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_10gc1.pdf",bbox_inches="tight")
+
+
+# In[98]:
+
+
+#Grafica de temperatura para tiempo 2*tiempo/3
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo[int((tiempo-1)*2/3)], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_10gc2.pdf",bbox_inches="tight")
+
+
+# In[99]:
+
+
+#Grafica de temperatura para tiempo tiempo/3
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo[int((tiempo-1)/3)], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_10gc3.pdf",bbox_inches="tight")
+
+
+# In[100]:
+
+
+#Grafica de temperatura para tiempo 1
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo[int((tiempo-1))], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_10gc4.pdf",bbox_inches="tight")
+
+
+# In[102]:
+
+
+# Para graficar los datos del punto 3, la ecuacion diferencial parcial
+#inicialmente se importan los datos generados por el programa de c++
+#los datos son muy pesados asi que todo es muuuuy lento.
+#SE importan los datos de la parte 2
+data2 = np.genfromtxt("parte2_PDE.dat",None,skip_header=1)
+tags2 = (np.genfromtxt("parte2_PDE.dat",skip_footer=(len(data2)-1),dtype=None))[0].decode("UTF8").split(",")
+#datos de variacion de temperatura en el tiempo
+var_temp_tiempo2 = [] 
+#tiempo del proceso
+tiempo2 = int(tags2[1])
+#numero de "iteraciones" que se harian
+N2 = int(tags2[3])
+N2_0 = 1;
+N2_f = N+1
+
+for i in range(tiempo2):
+    var_temp2 = np.zeros([N2,N2]) 
+    for j in range(N2_0,N2_f):
+        tag_data2 = data2[j].decode("UTF8").split(",")
+        for k in range(N):
+            var_temp2[j-N2_0][k]=float(tag_data2[k])
+    N2_0 += N2+1
+    N2_f += N2+1
+    var_temp_tiempo2.append(var_temp2)
+    
+x = np.arange(0,N2,1)
+y = np.arange(0,N2,1)
+x,y = np.meshgrid(x, y)
+#Temperatura en condiciones iniciales, es decir en el tiempo inicial
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo[0], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_Abiertas1.pdf",bbox_inches="tight")
+
+
+
+
+# In[104]:
+
+
+#Grafica de temperatura para tiempo 2*tiempo/3
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo2[int((tiempo-1)*2/3)], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_Abiertas2.pdf",bbox_inches="tight")
+
+#Grafica de temperatura para tiempo tiempo/3
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo2[int((tiempo-1)/3)], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_Abiertas3.pdf",bbox_inches="tight")
+
+#Grafica de temperatura para tiempo 1
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(x, y, var_temp_tiempo2[int(tiempo-1)], rstride=1, cstride=1, cmap='winter', linewidth=0, antialiased=False)
+fig.colorbar(surf, shrink=0.5, aspect=5)
+fig.savefig("PDE_temp_Abiertas4.pdf",bbox_inches="tight")
 
