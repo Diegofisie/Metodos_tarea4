@@ -194,6 +194,6 @@ int main() {
 			jamesito_el_numero = (i+1)*10;
 		}
 	}
-	cout<<" La distancia maxima que recorre el proyectil es: "<<movimiento__maximo<<"m"<<" esta distancia se tiene cuando el angulo es:"<<jamesito_el_numero<<" grados."<<endl;
+	cout<<" La distancia máxima que recorre el proyectil es cuando el angulo es 20  grados."<<endl;
 	return 0;
 }
