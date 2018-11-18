@@ -60,7 +60,7 @@ void eqn_dif_10gc(string nombre_txt){
 		}
 	}
 	// Se escribe en el archivo de datos creado la temperatura de la varilla para verifiar que se haya creado
-	file << "Temperatura,"<<Temp_10gc<<",Num"<<Num<<"\n";
+	file << "Temperatura,"<<Temp_10gc<<",Num,"<<Num<<"\n";
 	// Ahora se crea el for para la solucion de la ecuacion diferencial parcial
 	for (int k = 0; k < Temp_10gc; ++k)
 	{
@@ -120,11 +120,11 @@ void eqn_dif_open(string nombre_txt){
 				datos_anteriores[i][j]=100;
 			}
 			else{
-				datos_actuales[i][j]=10;
+				datos_anteriores[i][j]=10;
 			}
 		}
 	}
-	file << "T,"<<Temp_open<<",N,"<<Num<<"\n";
+	file << "T,"<<Temp_open<<",Num,"<<Num<<"\n";
 
 
 
@@ -191,11 +191,11 @@ void eqn_dif_peri(string nombre_txt){
 				datos_anteriores[i][j]=100;
 			}
 			else{
-				datos_actuales[i][j]=10;
+				datos_anteriores[i][j]=10;
 			}
 		}
 	}
-	file << "T,"<<Temp_peri<<",N,"<<Num<<"\n";
+	file << "T,"<<Temp_peri<<",Num,"<<Num<<"\n";
 	for (int k = 0; k < Temp_peri; ++k)
 	{
 		file << "Tiempo:"<<k*dt<<"\n";
